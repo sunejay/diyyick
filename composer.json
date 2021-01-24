@@ -2,7 +2,7 @@
     "name": "diyyick/php-mvc-lib",
     "description": "Simple PHP MVC Library",
     "type": "library",
-    "license": "Apache License",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Sune Jack",
