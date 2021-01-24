@@ -1,0 +1,13 @@
+{
+    "name": "diyyick/php-mvc-lib",
+    "description": "Simple PHP MVC Library",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Sune Jack",
+            "email": "sunejack1@gmail.com"
+        }
+    ],
+    "require": {}
+}
