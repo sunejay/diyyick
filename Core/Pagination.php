@@ -9,6 +9,11 @@ class Pagination
 {
     private array $data;
     
+    /**
+     * validations method
+     * @param array $rules all records fetched assoc
+     * @param int $perPage number of records per page
+     */
     public function paginator(array $values, int $perPage) 
     {
         $totalValues = count($values);
@@ -25,7 +30,9 @@ class Pagination
         }
         return $numbers;
     }
-    
+    /**
+     * returns result set
+     */
     public function fetchResult()
     {
         $resultValues = $this->data; 

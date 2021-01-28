@@ -15,6 +15,10 @@ class Router
     private static $paramId;
     private static $paramStr;
 
+    /**
+     * @param string $path route URL 
+     * @param mixed $callback callback function 
+     */
     public static function add(string $path, $callback)
     {
         // Get request URL
@@ -42,13 +46,7 @@ class Router
         $isMatch = preg_match($route, $getUrl, $matches, PREG_OFFSET_CAPTURE);
         
         if ($isMatch) {
-            self::$validUrl[$path] = $callback;
-            if (is_array($callback)){
-                $controller = new $callback[0]();
-                self::$controller = $controller;
-                self::$controller->action = $callback[1];
-                $callback[0] = $controller;
-            }
+            self::$validUrl[$path] = $callback; 
             
             foreach (self::$params as $key => $value) {
                 if (preg_match($p1, $key)) {
@@ -62,15 +60,38 @@ class Router
                     self::$paramId = $$re;
                 }
             }
-            
+            /**
+             * if callback is an array e.g ('/', [Controller::class, 'action'])
+             */
+            if (is_array($callback)){
+                $controller = new $callback[0]();
+                self::$controller = $controller;
+                self::$controller->action = $callback[1];
+                $callback[0] = $controller;
+            }
+            /**
+             * if callback is a string e.g ('/', 'Controller::action') 
+             */
+            if (is_string($callback)) {
+                if (!empty(self::$paramId) && !empty(self::$paramStr)) {
+                    call_user_func($callback, new Request(), new Response(), (int)self::$paramId, self::$paramStr);
+                } elseif (!empty(self::$paramId)) {
+                    call_user_func($callback, new Request(), new Response(), (int)self::$paramId);
+                } elseif (!empty(self::$paramStr)) {
+                    call_user_func($callback, new Request(), new Response(), self::$paramStr);
+                } else {
+                    call_user_func($callback, new Request(), new Response(),);
+                }
+            }
+
             if (!empty(self::$paramId) && !empty(self::$paramStr)) {
-                call_user_func($callback, new Response(), new Request(), (int)self::$paramId, self::$paramStr);
+                call_user_func($callback, new Request(), new Response(), (int)self::$paramId, self::$paramStr);
             } elseif (!empty(self::$paramId)) {
-                call_user_func($callback, new Response(), new Request(), (int)self::$paramId);
+                call_user_func($callback, new Request(), new Response(), (int)self::$paramId);
             } elseif (!empty(self::$paramStr)) {
-                call_user_func($callback, new Response(), new Request(), self::$paramStr);
+                call_user_func($callback, new Request(), new Response(), self::$paramStr);
             } else {
-                call_user_func($callback, new Response(), new Request());
+                call_user_func($callback, new Request(), new Response(),);
             }
         }
     }

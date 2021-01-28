@@ -79,11 +79,11 @@ class Response
         }
     }
 
-    /*public function renderTemplate($template, $args=[])
+    public function renderTemplate($template, $args=[])
     {
         require_once dirname(__DIR__) . "/vendor/autoload.php";
         $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . "/views");
         $twig = new \Twig\Environment($loader);
         return $twig->render($template, $args);
-    }*/
+    }
 }
