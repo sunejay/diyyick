@@ -20,16 +20,12 @@ class Session
    
     public static function flashType()
     {
-        if (isset($_SESSION['flashType'])) {
-            return $_SESSION['flashType'];
-        }
+        if (isset($_SESSION['flashType'])) return $_SESSION['flashType'];
     }
    
     public static function flashMessage()
     {
-        if (isset($_SESSION['flashMessage'])) {
-            return $_SESSION['flashMessage'];
-        }
+        if (isset($_SESSION['flashMessage'])) return $_SESSION['flashMessage'];
     } 
     
     public static function clearMessage()
@@ -65,9 +61,7 @@ class Session
 
     public static function remove(string $name)
     {
-        if (self::exist($name)) {
-            unset($_SESSION[$name]);
-        }
+        if (self::exist($name)) unset($_SESSION[$name]);
     }
     
     public static function login(Entity $user)
@@ -99,9 +93,7 @@ class Session
     
     public static function loginUserFromCookie()
     {
-        if (!self::exist(AUTH_USER_SESSION_NAME) && Cookie::exist(REMEMBER_ME_COOKIE_NAME)) {
-            self::loginFromCookie();
-        }
+        if (!self::exist(AUTH_USER_SESSION_NAME) && Cookie::exist(REMEMBER_ME_COOKIE_NAME)) self::loginFromCookie();
     }
     
     public static function loginFromCookie()

@@ -9,9 +9,7 @@ class Cookie
 {
     public static function set(string $name, string $value, int $expiry)
     {
-        if (setcookie($name, $value, time()+$expiry, '/')) {
-            return true;
-        }
+        if (setcookie($name, $value, time()+$expiry, '/')) return true;
         return false;
     }
     

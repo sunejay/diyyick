@@ -33,16 +33,16 @@ class Request
         return $this->method() === 'post' ?? $this->method() === 'POST';
     }
     
-    public function getData()
+    public function formData()
     {
         $body = [];
-        if ($this->method() === 'get'){
+        if ($this->method() == 'get'){
             foreach ($_GET as $key => $value) {
                 $key = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
                 $body[$key] = htmlspecialchars(stripslashes(strip_tags(trim($key))));
             }
         }
-        if ($this->method() === 'post'){
+        if ($this->method() == 'post'){
             foreach ($_POST as $key => $value) {
                 $key = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
                 $body[$key] = htmlspecialchars(stripslashes(strip_tags(trim($key))));
@@ -54,53 +54,25 @@ class Request
     public function getParamId()
     {
         $ids = "/^[0-9]*$/";
-        $uri = $_SERVER['REQUEST_URI'];
-        $url = ltrim($uri, '/');
-        $params = explode('/', $url);
+        $params = explode('/', ltrim($_SERVER['REQUEST_URI'], '/'));
         foreach ($params as $key => $value) {
-            if (preg_match($ids, $value)) {
-                return $value;
-            }
+            if (preg_match($ids, $value)) return $value;
         }
     }  
     
-    public function cleanData(string $data)
+    public function getData(string $field)
     {
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if (isset($_POST[$data])){
-            $data = htmlspecialchars(trim(stripslashes(strip_tags($_POST[$data]))));
-            // $data = mysqli_real_escape_string($db, $data);
-            return $data;
-        }
-    }
-    
-    public function input(string $field)
-    {
-        if($this->isPost() && !empty($_POST)){
+        if ($this->isPost() && !empty($_POST)) {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            return htmlspecialchars(stripslashes(strip_tags(trim($_POST[$field]))));
-        } else if($this->isGet() && !empty($_GET)){
-            $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-            return htmlspecialchars(stripslashes(strip_tags(trim($_GET[$field]))));
+            if (isset($_POST[$field])) return htmlspecialchars(trim(stripslashes(strip_tags($_POST[$field]))));
         }
     }
-    
-    /*public function sanitize(string $value)
-    {
-	return htmlentities($value, ENT_QUOTES, "UTF-8");
-    }*/
     
     public function getJSON()
     {
-        if ($this->method !== 'POST') {
-            return [];
-        }
-        if (strcasecmp($this->contentType, 'application/json') !== 0) {
-            return [];
-        }
+        if ($this->method !== 'POST') return [];
+        if (strcasecmp($this->contentType, 'application/json') !== 0) return [];
         // Receive the RAW post data
-        $content = trim(file_get_contents("php://input"));
-        $decoded = json_decode($content);
-        return $decoded;
+        return json_decode(trim(file_get_contents("php://input")));
     }    
 }

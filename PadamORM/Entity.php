@@ -119,6 +119,6 @@ abstract class Entity extends EntityForm
     
     public function slugify(string $param) {
         $slug = preg_replace('/[^a-z0-9]+/i', '-', trim(strtolower($param)));
-        return $slug;
+        return $slug . '-' . time();
     }
 }

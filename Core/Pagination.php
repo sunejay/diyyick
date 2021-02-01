@@ -35,7 +35,6 @@ class Pagination
      */
     public function fetchResult()
     {
-        $resultValues = $this->data; 
-        return $resultValues;
+        return $this->data; 
     }
 }

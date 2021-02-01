@@ -39,9 +39,7 @@ class Response
             $protocol = "http://";
         }
         if ($next) {
-            if ($_REQUEST['next']) {
-                return header('Location: '.$_REQUEST['next'], true, 303);
-            }
+            if ($_REQUEST['next']) return header('Location: '.$_REQUEST['next'], true, 303);
         }
         return header("Location: ".$protocol.$_SERVER['HTTP_HOST'].$url, true, 303);
     }
@@ -55,9 +53,7 @@ class Response
             $protocol = "http://";
         }
         $redirectLink = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        if (Session::isLoggedIn() == false) {
-            return $this->redirect(LOGIN.'?next='.$redirectLink);
-        }
+        if (Session::isLoggedIn() == false) return $this->redirect(LOGIN.'?next='.$redirectLink);
     }
 
     public function flash(string $type, string $message) 
@@ -75,7 +71,7 @@ class Response
         if (file_exists($file) && is_readable($file)){
             require_once $file;
         } else {
-            echo "File not find";
+            echo "<h1>File not found</h1>";
         }
     }
 

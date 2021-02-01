@@ -35,7 +35,7 @@ abstract class EntityForm
 
     public function getLabels(string $attribute)
     {
-        return $this->labels[$attribute] ?? $attribute;
+        return $this->labels[$attribute] ?? ucwords($attribute);
     }
 
     public function loadData(array $data)

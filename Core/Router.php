@@ -12,7 +12,7 @@ class Router
     public static ?Controller $controller = null;
     private static array $validUrl = [];
     private static array $params = [];
-    private static $paramId;
+    private static $paramInt;
     private static $paramStr;
 
     /**
@@ -24,16 +24,19 @@ class Router
         // Get request URL
         $getUrl = isset($_REQUEST['uri']) ? '/' . $_REQUEST['uri'] : '/';
         // Filter URL
-        $getUrl = filter_var($getUrl, FILTER_SANITIZE_URL);
-        $getUrl = strtolower($getUrl);
+        $getUrl = strtolower(filter_var($getUrl, FILTER_SANITIZE_URL));
         
+        /**
+         * @var string $p1 string parameters e.g '/user/{username}'
+         */ 
         $p1 = '/^\{([a-z]+)\}$/'; 
+        /**
+         * @var int $p2 int parameters e.g '/user/{id:\d+}'
+         */ 
         $p2 = '/^\{([a-z]+):([^\}]+)\}$/'; 
-        $uris = explode('/', $path);
-        $urls = explode('/', $getUrl);
-        if (count($urls) == count($uris)) {
-            self::$params = array_combine($uris, $urls);
-        }
+
+        $routerUrls = explode('/', $path);
+        $requestUrls = explode('/', $getUrl);
         
         // Convert the route to a regular expression: escape forward slashes
         $route = preg_replace('/\//', '\\/', $path);
@@ -45,6 +48,10 @@ class Router
         $route = '/^' . $route . '$/i';
         $isMatch = preg_match($route, $getUrl, $matches, PREG_OFFSET_CAPTURE);
         
+        if (count($requestUrls) == count($routerUrls)) {
+            self::$params = array_combine($routerUrls, $requestUrls);
+        }
+
         if ($isMatch) {
             self::$validUrl[$path] = $callback; 
             
@@ -57,7 +64,7 @@ class Router
                 if (preg_match($p2, $key)) {
                     $re = trim($key, '{:\d+}');
                     $$re = $value;
-                    self::$paramId = $$re;
+                    self::$paramInt = $$re;
                 }
             }
             /**
@@ -73,10 +80,10 @@ class Router
              * if callback is a string e.g ('/', 'Controller::action') 
              */
             if (is_string($callback)) {
-                if (!empty(self::$paramId) && !empty(self::$paramStr)) {
-                    call_user_func($callback, new Request(), new Response(), (int)self::$paramId, self::$paramStr);
-                } elseif (!empty(self::$paramId)) {
-                    call_user_func($callback, new Request(), new Response(), (int)self::$paramId);
+                if (!empty(self::$paramInt) && !empty(self::$paramStr)) {
+                    call_user_func($callback, new Request(), new Response(), (int)self::$paramInt, self::$paramStr);
+                } elseif (!empty(self::$paramInt)) {
+                    call_user_func($callback, new Request(), new Response(), (int)self::$paramInt);
                 } elseif (!empty(self::$paramStr)) {
                     call_user_func($callback, new Request(), new Response(), self::$paramStr);
                 } else {
@@ -84,16 +91,19 @@ class Router
                 }
             }
 
-            if (!empty(self::$paramId) && !empty(self::$paramStr)) {
-                call_user_func($callback, new Request(), new Response(), (int)self::$paramId, self::$paramStr);
-            } elseif (!empty(self::$paramId)) {
-                call_user_func($callback, new Request(), new Response(), (int)self::$paramId);
+            if (!empty(self::$paramInt) && !empty(self::$paramStr)) {
+                call_user_func($callback, new Request(), new Response(), (int)self::$paramInt, self::$paramStr);
+            } elseif (!empty(self::$paramInt)) {
+                call_user_func($callback, new Request(), new Response(), (int)self::$paramInt);
             } elseif (!empty(self::$paramStr)) {
                 call_user_func($callback, new Request(), new Response(), self::$paramStr);
             } else {
                 call_user_func($callback, new Request(), new Response(),);
             }
-        }
+        } /*else {
+            // throw new \Exception("Page not found");
+            echo '<h1>Page not found</h1>';
+        } */
     }
     
     public static function url(string $param) 
