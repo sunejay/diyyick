@@ -8,7 +8,7 @@ use Diyyick\Lib\PadamORM\DBContext;
  *
  * @author Sune
  */
-class Validation extends EntityForm
+class Validation 
 {
     public array $errors = [];
     

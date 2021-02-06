@@ -60,7 +60,7 @@ class Error
 
             error_log($message);
 
-            $res->renderTemplate("_$code.html");
+            $res->render("_$code"); // ?? $res->renderTemplate("_$code.html");
         }
     }
 }
