@@ -7,13 +7,11 @@ namespace Diyyick\Lib\Core;
  */
 class Request 
 {
-    public array $params;
     public string $method;
     public string $contentType;
 
-    public function __construct(array $params=[]) 
+    public function __construct() 
     {
-        $this->params = $params;
         $this->method = trim($_SERVER['REQUEST_METHOD']);
         $this->contentType = !empty($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
     }

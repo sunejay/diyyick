@@ -1,7 +1,6 @@
 <?php
 namespace Diyyick\Lib\Core;
 
-use Diyyick\Lib\Core\Request;
 use Diyyick\Lib\PadamORM\DBContext;
 /**
  * Description of Validation

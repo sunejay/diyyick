@@ -1,7 +1,6 @@
 <?php
-namespace Diyyick\Lib\Exception;
+namespace Diyyick\Lib\Core;
 
-use Diyyick\Lib\Core\Response;
 /**
  * Description of Error
  * Error and exception handler
@@ -60,7 +59,7 @@ class Error
 
             error_log($message);
 
-            $res->render("_$code"); // ?? $res->renderTemplate("_$code.html");
+            $res->render("_$code") ?? $res->renderTemplate("_$code.html");
         }
     }
 }

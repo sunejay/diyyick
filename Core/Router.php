@@ -1,7 +1,6 @@
 <?php
 namespace Diyyick\Lib\Core;
 
-use Diyyick\Lib\PadamORM\DBContext;
 /**
  * Description of Router
  *
@@ -10,8 +9,8 @@ use Diyyick\Lib\PadamORM\DBContext;
 class Router 
 {
     public static ?Controller $controller = null;
-    private static array $validUrl = [];
     private static array $routes = [];
+    private static array $validUrls = [];
     private static array $params = [];
     private static $paramInt;
     private static $paramStr;
@@ -22,8 +21,7 @@ class Router
      */
     public static function add(string $path, $callback)
     {
-        $getUrl = self::getUrl();
-        
+        $getUrl = self::getUrl();       
         /**
          * @var string $p1 string parameters e.g '/user/{username}'
          */ 
@@ -39,14 +37,14 @@ class Router
         $route = self::convertRouteToRegex($path);
         
         $isMatch = preg_match($route, $getUrl, $matches, PREG_OFFSET_CAPTURE);
-        self::$routes[] = $isMatch;
+        self::$validUrls[] = $isMatch;
 
         if (count($requestUrls) == count($routerUrls)) {
             self::$params = array_combine($routerUrls, $requestUrls);
         }
 
         if ($isMatch) {
-            self::$validUrl[$path] = $callback; 
+            self::$routes[$path] = $callback; 
             
             foreach (self::$params as $key => $value) {
                 if (preg_match($p1, $key)) {
@@ -77,7 +75,7 @@ class Router
             } elseif (!empty(self::$paramStr)) {
                 call_user_func($callback, new Request(), new Response(), self::$paramStr);
             } else {
-                call_user_func($callback, new Request(), new Response(),);
+                call_user_func($callback, new Request(), new Response());
             }
         } 
     }
@@ -98,19 +96,16 @@ class Router
     private static function getUrl()
     {
         // Get request URL
-        $getUrl = rtrim('/', $_REQUEST['uri']) ?? $_REQUEST['uri'];
-        $getUrl = $getUrl ? '/' . $getUrl : '/';
+        $getUrl = isset($_REQUEST['uri']) ? '/' . $_REQUEST['uri'] : '/';
+        if ($getUrl != '' && $getUrl != '/') $getUrl = chop($getUrl, '/'); 
         // Filter URL
         return strtolower(filter_var($getUrl, FILTER_SANITIZE_URL));
-
     }
 
     public static function dispatch() 
     {
-        $res = new Response();
-        if (!in_array(1, self::$routes)) {
+        if (!in_array(1, self::$validUrls)) {
             throw new \Exception('No route matched.', 404);
-            // $res->render('_404');
         } 
     }
 
