@@ -7,5 +7,5 @@ namespace Diyyick\Lib\Core;
  */
 class Controller 
 {
-    public string $action = '';
+    public $action = '';
 }

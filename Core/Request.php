@@ -7,8 +7,8 @@ namespace Diyyick\Lib\Core;
  */
 class Request 
 {
-    public string $method;
-    public string $contentType;
+    public $method;
+    public $contentType;
 
     public function __construct() 
     {

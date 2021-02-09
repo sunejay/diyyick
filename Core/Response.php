@@ -7,7 +7,7 @@ namespace Diyyick\Lib\Core;
  */
 class Response
 {
-    private int $status = 200;
+    private $status = 200;
     protected const ALERTS = ['info', 'success', 'warning', 'danger'];
     
     // This method does the same as setStatusCode

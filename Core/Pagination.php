@@ -7,7 +7,7 @@ namespace Diyyick\Lib\Core;
  */
 class Pagination 
 {
-    private array $data;
+    private $data;
     
     /**
      * validations method

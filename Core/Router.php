@@ -8,10 +8,10 @@ namespace Diyyick\Lib\Core;
  */
 class Router 
 {
-    public static ?Controller $controller = null;
-    private static array $routes = [];
-    private static array $validUrls = [];
-    private static array $params = [];
+    public static $controller = null;
+    private static $routes = [];
+    private static $validUrls = [];
+    private static $params = [];
     private static $paramInt;
     private static $paramStr;
 

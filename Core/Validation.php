@@ -9,7 +9,7 @@ use Diyyick\Lib\PadamORM\DBContext;
  */
 class Validation 
 {
-    public array $errors = [];
+    public $errors = [];
     
     /**
      * @param string $field form input value

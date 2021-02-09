@@ -18,7 +18,7 @@ abstract class EntityForm
     public const RULE_UNIQUE = 'unique';
     public const RULE_ALPHANUM = 'alphanum';
 
-    public array $errors = [];
+    public $errors = [];
     public $alphaNum = "/^[a-zA-Z0-9]*$/";
     public $validations = array();
     public $labels = array();
