@@ -36,14 +36,14 @@ class Request
         $body = [];
         if ($this->method() == 'get'){
             foreach ($_GET as $key => $value) {
-                $key = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-                $body[$key] = htmlspecialchars(stripslashes(strip_tags(trim($key))));
+                $key = htmlspecialchars(stripslashes(strip_tags(trim($key))));
+                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
         if ($this->method() == 'post'){
             foreach ($_POST as $key => $value) {
-                $key = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-                $body[$key] = htmlspecialchars(stripslashes(strip_tags(trim($key))));
+                $key = htmlspecialchars(stripslashes(strip_tags(trim($key))));
+                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
         return $body;
