@@ -32,28 +32,22 @@ class Response
 
     public function redirect(string $url, bool $next=false)
     {
-        $protocol = $_SERVER['SERVER_PROTOCOL'];
-        if (strpos($protocol, "https://")) {
-            $protocol = "https://";
-        } else {
-            $protocol = "http://";
-        }
         if ($next) {
-            if ($_REQUEST['next']) return header('Location: '.$_REQUEST['next'], true, 303);
+            if ($_GET['next']) {
+                return header('Location: '.BASEPATH.$_GET['next'], true, 303);
+                exit;
+            }
         }
-        return header("Location: ".$protocol.$_SERVER['HTTP_HOST'].$url, true, 303);
+        return header('Location: '.BASEPATH.$url, true, 303);
+        exit;
     }
     
     public function loginRequired()
     {
-        $protocol = $_SERVER['SERVER_PROTOCOL'];
-        if (strpos($protocol, "https")) {
-            $protocol = "https://";
-        } else {
-            $protocol = "http://";
+        $res = new Response();        
+        if (!Session::isLoggedIn()) {
+            return $res->redirect(LOGIN.'?next='.'/'.$_REQUEST['uri']);
         }
-        $redirectLink = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        if (Session::isLoggedIn() == false) return $this->redirect(LOGIN.'?next='.$redirectLink);
     }
 
     public function flash(string $type, string $message) 
