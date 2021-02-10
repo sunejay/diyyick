@@ -43,10 +43,9 @@ class Response
     }
     
     public function loginRequired()
-    {
-        $res = new Response();        
+    { 
         if (!Session::isLoggedIn()) {
-            return $res->redirect(LOGIN.'?next='.'/'.$_REQUEST['uri']);
+            return $this->redirect(LOGIN.'?next='.'/'.$_REQUEST['uri']);
         }
     }
 
@@ -65,7 +64,7 @@ class Response
         if (file_exists($file) && is_readable($file)){
             require_once $file;
         } else {
-            echo "<h1>File not found</h1>";
+            throw new \Exception("File not found" 404);
         }
     }
 
