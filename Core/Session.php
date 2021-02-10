@@ -110,7 +110,6 @@ class Session
             $user = $db->findOne($entity, [$entity->primaryKeys[0] => $userSession->user_id]);
             self::login($user);
         }
-        
         return self::user();
     }
     

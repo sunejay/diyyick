@@ -34,18 +34,18 @@ class Response
     {
         if ($next) {
             if ($_GET['next']) {
-                return header('Location: '.BASEPATH.$_GET['next'], true, 303);
+                return header('Location: ' . BASEPATH . $_GET['next'], true, 303);
                 exit;
             }
         }
-        return header('Location: '.BASEPATH.$url, true, 303);
+        return header('Location: ' . BASEPATH . $url, true, 303);
         exit;
     }
     
     public function loginRequired()
     { 
         if (!Session::isLoggedIn()) {
-            return $this->redirect(LOGIN.'?next='.'/'.$_REQUEST['uri']);
+            return $this->redirect(LOGIN . '?next=' . '/' . $_REQUEST['uri']);
         }
     }
 
