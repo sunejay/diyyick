@@ -7,8 +7,8 @@ namespace Diyyick\Lib\PadamORM;
  */
 class DBContext 
 {
-    private Database $db;
-    private array $entities = array();
+    private $db;
+    private $entities = array();
 
     public function __construct()
     {

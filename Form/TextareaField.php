@@ -24,4 +24,3 @@ class TextareaField extends BaseField
         );
     }
 }
-

@@ -21,7 +21,7 @@ abstract class Entity extends EntityForm
         foreach ($this->entityFields as $key) {
             $data[$key] = $this->$key;
         }
-        $this->db->insert($this->entityTable, $data);
+        $this->db->insert($this->tableName(), $data);
     }
 
     public function update()
@@ -36,7 +36,7 @@ abstract class Entity extends EntityForm
             $where .=' '.$key ." = ".$this->$key." &&";
         }
         $where = rtrim($where, '&');
-        $this->db->update($this->entityTable, $data, $where);
+        $this->db->update($this->tableName(), $data, $where);
     }
 
     public function remove()
@@ -46,7 +46,7 @@ abstract class Entity extends EntityForm
             $where .=' '.$key ." = ".$this->$key." &&";
         }
         $where = rtrim($where, '&');
-        $this->db->delete($this->entityTable, $where);
+        $this->db->delete($this->tableName(), $where);
     }
     
     public function create(array $conditions)
@@ -54,7 +54,7 @@ abstract class Entity extends EntityForm
         foreach ($conditions as $key => $value) {
             $data[$key] = $value;
         }
-        $this->db->insert($this->entityTable, $data);
+        $this->db->insert($this->tableName(), $data);
     }
     
     public function findOne($conditions=array(), $fields='*', $order='', $limit=null, $offset=''){
