@@ -64,7 +64,7 @@ class Response
         if (file_exists($file) && is_readable($file)){
             require_once $file;
         } else {
-            throw new \Exception("File not found" 404);
+            throw new \Exception("File not found", 404);
         }
     }
 
