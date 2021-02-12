@@ -8,7 +8,8 @@ namespace Diyyick\Lib\Core;
 class Response
 {
     private $status = 200;
-    protected const ALERTS = ['info', 'success', 'warning', 'danger'];
+    private const ALERTS = array('info', 'success', 'warning', 'danger');
+    private const IMAGE_TYPES = array('image/jpeg', 'image/gif', 'image/png');
     
     // This method does the same as setStatusCode
     public function status(int $code) 
@@ -74,5 +75,20 @@ class Response
         $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . "/views");
         $twig = new \Twig\Environment($loader);
         return $twig->render($template, $args);
+    }
+
+    public function saveImageFile($getFile)
+    {
+        if ($getFile['error']) {
+            $this->flash('danger', 'Error uploading file');
+        } else {
+            if (in_array($getFile['type'], self::IMAGE_TYPES) && $getFile['size'] < 500000) {
+                $filename = dirname(__DIR__) . '/../uploads/' . time() . '-' . $getFile['name'];
+            } else {
+                $this->flash('danger', 'Invalid file type or file size is too large.');
+            }
+        }
+        move_uploaded_file($getFile['tmp_name'], $filename);
+        return $filename;
     }
 }
