@@ -77,9 +77,9 @@ class Response
         return $twig->render($template, $args);
     }
 
-    public function saveImageFile($getFile)
+    public function saveImage($getFile)
     {
-        if ($getFile['error']) {
+        if ($getFile['error'] != 0) {
             $this->flash('danger', 'Error uploading file');
         } else {
             if (in_array($getFile['type'], self::IMAGE_TYPES) && $getFile['size'] < 500000) {
