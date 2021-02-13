@@ -65,6 +65,13 @@ class Request
             if (isset($_POST[$field])) return htmlspecialchars(trim(stripslashes(strip_tags($_POST[$field]))));
         }
     }
+
+    public function getFile($field)
+    {
+        if ($this->isPost()) {
+            if (isset($_FILES[$field])) return $_FILES[$field];
+        }
+    }
     
     public function getJSON()
     {
