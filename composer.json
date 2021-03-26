@@ -9,5 +9,10 @@
             "email": "sunejack1@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Diyyick\\": "src/"
+        }
+    },
     "require": {}
 }

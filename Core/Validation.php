@@ -22,6 +22,14 @@ class Validation
             return htmlspecialchars(stripslashes(strip_tags(trim($_POST[$field]))));
         } 
     }
+
+    public function getFile($field)
+    {
+        $req = new Request();
+        if ($req->isPost()) {
+            if (isset($_FILES[$field])) return $_FILES[$field];
+        } 
+    }
     
     /**
      * validations method
