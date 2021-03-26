@@ -1,8 +1,8 @@
 <?php
-namespace Diyyick\Lib\Core;
+namespace Diyyick\Core;
 
-use Diyyick\Lib\PadamORM\DBContext;
-use Diyyick\Lib\Form\FormField;
+use Diyyick\PadamORM\DBContext;
+use Diyyick\Form\FormField;
 /**
  * Description of EntityForm
  *

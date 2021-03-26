@@ -1,5 +1,5 @@
 <?php
-namespace Diyyick\Lib\PadamORM;
+namespace Diyyick\PadamORM;
 /**
  * Description of Database
  *

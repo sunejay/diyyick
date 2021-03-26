@@ -1,5 +1,5 @@
 <?php
-namespace Diyyick\Lib\Core;
+namespace Diyyick\Core;
 /**
  * Description of Response
  *

@@ -1,8 +1,8 @@
 <?php
-namespace Diyyick\Lib\Form;
+namespace Diyyick\Form;
 
-use Diyyick\Lib\Core\Session;
-use Diyyick\Lib\PadamORM\Entity;
+use Diyyick\Core\Session;
+use Diyyick\PadamORM\Entity;
 /**
  * Description of Form
  *

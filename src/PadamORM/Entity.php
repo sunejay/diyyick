@@ -1,7 +1,7 @@
 <?php
-namespace Diyyick\Lib\PadamORM;
+namespace Diyyick\PadamORM;
 
-use Diyyick\Lib\Core\EntityForm;
+use Diyyick\Core\EntityForm;
 /**
  * Description of Entity
  *

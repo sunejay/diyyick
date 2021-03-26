@@ -1,5 +1,5 @@
 <?php
-namespace Diyyick\Lib\Form;
+namespace Diyyick\Form;
 
 /**
  * Description of SelectField

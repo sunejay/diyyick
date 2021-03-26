@@ -1,7 +1,7 @@
 <?php
-namespace Diyyick\Lib\Form;
+namespace Diyyick\Form;
 
-use Diyyick\Lib\Core\EntityForm;
+use Diyyick\Core\EntityForm;
 /**
  * Description of InputField
  *

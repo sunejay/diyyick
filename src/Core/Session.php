@@ -1,8 +1,8 @@
 <?php
-namespace Diyyick\Lib\Core;
+namespace Diyyick\Core;
 
-use Diyyick\Lib\PadamORM\Entity;
-use Diyyick\Lib\PadamORM\DBContext;
+use Diyyick\PadamORM\Entity;
+use Diyyick\PadamORM\DBContext;
 /**
  * Description of Session
  *
