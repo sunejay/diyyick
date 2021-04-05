@@ -83,7 +83,7 @@ class Response
             $this->flash('danger', 'Error uploading file');
         } else {
             if (in_array($getFile['type'], self::IMAGE_TYPES) && $getFile['size'] < 500000) {
-                $filename = dirname(__DIR__) . '/../uploads/' . time() . '-' . $getFile['name'];
+                $filename = ROOTDIR . '/uploads/' . time() . '-' . $getFile['name'];
             } else {
                 $this->flash('danger', 'Invalid file type or file size is too large.');
             }
