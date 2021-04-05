@@ -61,7 +61,7 @@ class Response
     public function render(string $view, array $args=[])
     {
         extract($args, EXTR_SKIP);
-        $file = dirname(__DIR__) . "/../App/Views/$view.php";
+        $file = ROOTDIR . "/App/Views/$view.php";
         if (file_exists($file) && is_readable($file)){
             require_once $file;
         } else {
@@ -71,8 +71,8 @@ class Response
 
     public function renderTemplate($template, $args=[])
     {
-        require_once dirname(__DIR__) . "/vendor/autoload.php";
-        $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . "/views");
+        require_once ROOTDIR . "/vendor/autoload.php";
+        $loader = new \Twig\Loader\FilesystemLoader(ROOTDIR . "/App/Views");
         $twig = new \Twig\Environment($loader);
         return $twig->render($template, $args);
     }
